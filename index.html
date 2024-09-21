@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chill Night App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Chill Night</h1>
+        <select id="nameDropdown">
+            <option value="">-- Select Name --</option>
+            <option value="Andres">Andres</option>
+            <option value="Miguel">Miguel</option>
+            <option value="Mauricio">Mauricio</option>
+            <option value="Nosh">Nosh</option>
+            <option value="Diego">Diego</option>
+        </select>
+        <div id="drinkCountDisplay" class="hidden">
+            <div class="circle">
+                <span id="drinkCountValue"></span>
+            </div>
+        </div>
+        <div class="button-container">
+            <button id="decreaseButton">-</button>
+            <button id="increaseButton">+</button>
+        </div>
+        <input type="range" id="slider" min="0" max="10" step="0.5" value="0" class="slider">
+        <div id="sliderValue">Value: 0</div> <!-- Value display -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
