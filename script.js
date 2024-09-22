@@ -1,20 +1,29 @@
-document.getElementById('nameDropdown').addEventListener('change', function() {
+const accessToken = 'ya29.a0AcM612zZnp0zyUdwyD-5KvxVy1CQcwXX1AT5FBouPltseNw_3tydpua4iU8bWZLnlb-b62OOH3VTq1lM0rWP1Ak0t4NYXFoWF6ARPkCeN_IJp9QomNj9tXVs1sCfdm7y7UOF_jPh835sRRXhS6Jyk8AybdtREqv7MgaCgYKAe4SARESFQHGX2MiyY66Lsh0l74AA1DpvN9ETg0169'; // Your actual access token
+
+document.getElementById('nameDropdown').addEventListener('change', async function() {
     const selectedName = this.value;
     if (selectedName) {
-        fetchDrinkCount(selectedName);
+        const drinkCount = await fetchDrinkCount(selectedName);
+        displayDrinkCount(drinkCount);
+        resetSlider(); // Reset slider to 0
     }
 });
 
 async function fetchDrinkCount(name) {
-    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA/values/'DrinksData'!A1:B6?key=AIzaSyCqYE-0RdSqjul0Vbow-GYpWKqQWV8P7Os`);
+    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA/values/'DrinksData'!A1:B6?access_token=${accessToken}`);
+
+    if (!response.ok) {
+        console.error('Failed to fetch drink count:', response.statusText);
+        return;
+    }
+
     const data = await response.json();
     const values = data.values;
 
-    // Assuming 'drink_count' is in the second column
-    const drinkCountIndex = 1; // Update this based on your sheet structure
+    const drinkCountIndex = 1;
     const drinkCount = values.find(row => row[0] === name)?.[drinkCountIndex];
 
-    displayDrinkCount(drinkCount);
+    return drinkCount;
 }
 
 function displayDrinkCount(drinkCount) {
@@ -30,54 +39,108 @@ function displayDrinkCount(drinkCount) {
     }
 }
 
-// Slider functionality
-const slider = document.getElementById('slider');
-const sliderValue = document.getElementById('sliderValue');
+function resetSlider() {
+    const slider = document.getElementById('slider');
+    slider.value = 0; // Reset slider to 0
+    const sliderValue = document.getElementById('sliderValue');
+    sliderValue.textContent = 'Drunkness Level: 0'; // Reset display to 0
+}
 
-slider.addEventListener('input', function() {
-    sliderValue.textContent = 'Value: ' + this.value;
-});
-
-// Button functionality
-const decreaseButton = document.getElementById('decreaseButton');
-const increaseButton = document.getElementById('increaseButton');
-
-decreaseButton.addEventListener('click', () => updateDrinkCount(-1));
-increaseButton.addEventListener('click', () => updateDrinkCount(1));
-
-async function updateDrinkCount(change) {
+document.getElementById('decreaseButton').addEventListener('click', async () => {
     const selectedName = document.getElementById('nameDropdown').value;
     if (!selectedName) return;
+    await updateDrinkCount(selectedName, -1);
+    const newCount = await fetchDrinkCount(selectedName);
+    displayDrinkCount(newCount);
+});
 
-    // Fetch the current drink count first
-    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA/values/'DrinksData'!A1:B6?key=AIzaSyCqYE-0RdSqjul0Vbow-GYpWKqQWV8P7Os`);
+document.getElementById('increaseButton').addEventListener('click', async () => {
+    const selectedName = document.getElementById('nameDropdown').value;
+    if (!selectedName) return;
+    await updateDrinkCount(selectedName, 1);
+    const newCount = await fetchDrinkCount(selectedName);
+    displayDrinkCount(newCount);
+});
+
+async function updateDrinkCount(name, change) {
+    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA/values/'DrinksData'!A1:B6?access_token=${accessToken}`);
+
+    if (!response.ok) {
+        console.error('Failed to fetch data for update:', response.statusText);
+        return;
+    }
+
     const data = await response.json();
     const values = data.values;
 
-    // Find the index of the row where the name matches
-    const nameRow = values.find(row => row[0] === selectedName);
+    const nameRow = values.find(row => row[0] === name);
     if (!nameRow) return;
 
     const currentCount = parseInt(nameRow[1]) || 0;
     const newCount = currentCount + change;
 
-    // Update the spreadsheet
-    const rowIndex = values.findIndex(row => row[0] === selectedName) + 1; // +1 to account for 1-based index
+    const rowIndex = values.findIndex(row => row[0] === name) + 1; // +1 for 1-based index
     const updateResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA/values/'DrinksData'!B${rowIndex}?valueInputOption=USER_ENTERED`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // Use your valid access token
+            'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify({
             range: `'DrinksData'!B${rowIndex}`,
-            values: [[newCount]]
-        })
+            values: [[newCount]],
+        }),
     });
 
-    if (updateResponse.ok) {
-        displayDrinkCount(newCount); // Update the UI with the new count
+    if (!updateResponse.ok) {
+        console.error('Failed to update drink count:', updateResponse.statusText);
     } else {
-        console.error('Error updating drink count:', updateResponse.statusText);
+        console.log(`Updated drink count for ${name}:`, newCount);
+        displayDrinkCount(newCount); // Update the display with the new count
     }
 }
+
+// Slider functionality
+const slider = document.getElementById('slider');
+const sliderValue = document.getElementById('sliderValue');
+
+slider.addEventListener('input', function() {
+    const drunknessLevel = this.value;
+    sliderValue.textContent = 'Drunkness Level: ' + drunknessLevel;
+});
+
+// Submit button functionality
+document.getElementById('submitButton').addEventListener('click', async () => {
+    const selectedName = document.getElementById('nameDropdown').value;
+    const drunknessLevel = slider.value;
+    const notes = document.getElementById('notes').value;
+    const drinkCount = document.getElementById('drinkCountValue').textContent || '0'; // Get the drink count from the display
+
+    if (!selectedName || drunknessLevel === null) {
+        console.error('Name or drunkness level is missing');
+        return;
+    }
+
+    const timestamp = new Date().toISOString();
+    const rowData = [timestamp, selectedName, drunknessLevel, drinkCount, notes]; // Include drink count in the row data
+
+    // Add the row data to the RawData sheet
+    const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA/values/'RawData'!A:E:append?valueInputOption=USER_ENTERED`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            values: [rowData]
+        }),
+    });
+
+    if (!response.ok) {
+        console.error('Failed to append data:', response.statusText);
+    } else {
+        console.log('Data appended successfully:', rowData);
+        // Clear the screen and display the thank you message
+        document.body.innerHTML = '<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 24px; color: white; background-color: black; font-family: "Comic Sans MS";">Thanks! Reload page to do another entry</div>';
+    }
+});

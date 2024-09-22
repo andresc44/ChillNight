@@ -11,20 +11,20 @@ body {
   
   .container {
     text-align: center;
-    padding: 20px; 
+    padding: 10px; /* Reduced padding */
   }
   
   h1 {
-    font-family: 'Brush Script MT', cursive; /* Use the Brush Script MT font */
-    font-size: 56px; /* Increase font size */
-    font-weight: 100; /* Thinner letters */
+    font-family: 'Brush Script MT', cursive; 
+    font-size: 56px; 
+    font-weight: 100; 
     margin-bottom: 20px; 
-    color: white; /* Change color if desired */
-    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3); /* Optional shadow for effect */
+    color: white; 
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.3); 
   }
   
   select {
-    padding: 10px; 
+    padding: 8px; /* Reduced padding */
     font-size: 16px; 
     border: 2px solid lightblue; 
     border-radius: 5px; 
@@ -32,6 +32,7 @@ body {
     color: white; 
     cursor: pointer; 
     transition: border-color 0.3s; 
+    font-family: 'Comic Sans MS', cursive; /* More casual font for names */
   }
   
   select:hover {
@@ -39,10 +40,11 @@ body {
   }
   
   #drinkCountDisplay {
-    display: flex; /* Use flexbox */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    margin-top: 20px; /* Space above the circle */
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 20px; 
+    font-family: 'Comic Sans MS', cursive; /* Comic Sans for the drink count */
   }
   
   .circle {
@@ -57,32 +59,67 @@ body {
     color: lightblue;
   }
   
-  .button-container {
-    margin-top: 20px; /* Space above the buttons */
+  .hidden {
+    display: none;
+  }
+  
+  .buttons {
+    margin: 20px 0;
   }
   
   button {
-    padding: 10px 15px; /* Button padding */
-    font-size: 20px; /* Font size */
-    color: white; /* Text color */
-    background-color: lightblue; /* Button background color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    margin: 0 10px; /* Space between buttons */
-    transition: background-color 0.3s; /* Smooth background change */
+    background-color: lightblue;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
   }
   
   button:hover {
-    background-color: deepskyblue; /* Change color on hover */
+    background-color: deepskyblue;
   }
   
-  .slider {
-    width: 80%; /* Make the slider wider */
-    margin-top: 20px; /* Space above the slider */
+  /* Slider styles */
+  input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none; /* Remove default styling */
+    background: orange; /* Track color */
+    height: 12px; /* Increased height of the track for more width */
+    border-radius: 5px; /* Rounded edges */
+    margin-top: 10px; /* Space for slider */
   }
   
-  .hidden {
-    display: none;
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default thumb styling */
+    appearance: none; /* Remove default thumb styling */
+    width: 30px; /* Increased width of the thumb */
+    height: 30px; /* Increased height of the thumb */
+    background: orange; /* Thumb color */
+    border-radius: 50%; /* Circular shape */
+    cursor: pointer; /* Cursor change on hover */
+  }
+  
+  input[type="range"]::-moz-range-thumb {
+    width: 30px; /* Increased width of the thumb */
+    height: 30px; /* Increased height of the thumb */
+    background: orange; /* Thumb color */
+    border-radius: 50%; /* Circular shape */
+    cursor: pointer; /* Cursor change on hover */
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 8px; /* Reduced padding */
+    margin: 10px 0;
+    border: 2px solid lightblue;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+  }
+  
+  input[type="text"]::placeholder {
+    color: grey;
   }
   
