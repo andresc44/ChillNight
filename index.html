@@ -1,42 +1,12 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drink Count App</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Send Data Example</title>
+    <script src="script.js" defer></script> <!-- Make sure to link your JavaScript file -->
 </head>
 <body>
-    <div class="container">
-        <h1>Chill Night</h1>
-        <select id="nameDropdown">
-            <option value="">-- Select Name --</option>
-            <option value="Andres">Andres</option>
-            <option value="Miguel">Miguel</option>
-            <option value="Mauricio">Mauricio</option>
-            <option value="Nosh">Nosh</option>
-            <option value="Diego">Diego</option>
-        </select>
-        
-        <div id="drinkCountDisplay" class="hidden">
-            <div class="circle">
-                <span id="drinkCountValue"></span>
-            </div>
-        </div>
-        
-        <div class="buttons">
-            <button id="decreaseButton">-</button>
-            <button id="increaseButton">+</button>
-        </div>
-
-        <p style="margin-top: 10px; font-family: 'Comic Sans MS', cursive;" id="sliderValue">Drunkness Level: 0</p>
-        <input type="range" id="slider" min="0" max="10" step="0.5" value="0">
-
-        <input type="text" id="notes" placeholder="(Optional Notes)" onfocus="this.placeholder=''" onblur="this.placeholder='(Optional Notes)'">
-        
-        <button id="submitButton" style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; padding: 10px 20px;">SUBMIT</button>
-    </div>
-
-    <script src="script.js"></script>
+    <h1>Send Data</h1>
+    <button id="sendDataBtn">Send Data</button>
 </body>
 </html>
