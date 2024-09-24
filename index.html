@@ -1,12 +1,68 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Data Example</title>
-    <script src="script.js" defer></script> <!-- Make sure to link your JavaScript file -->
+    <title>Drink Count App</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Send Data</h1>
-    <button id="sendDataBtn">Send Data</button>
+    <div class="container">
+        <h1>Chill Night</h1>
+        <select id="nameDropdown">
+            <option value="">-- Select Name --</option>
+            <option value="Andres">Andres</option>
+            <option value="Mauricio">Mauricio</option>
+            <option value="Nosh">Nosh</option>
+            <option value="Diego">Diego</option>
+            <option value="Miguel">Miguel</option>
+        </select>
+        
+        <div id="drinkCountDisplay" class="hidden">
+            <div class="circle">
+                <span id="drinkCountValue"></span>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button id="decreaseButton" class="minus-button"></button>
+            <button id="increaseButton" class="plus-button"></button>
+        </div>
+
+
+        <p style="margin-top: 60px; font-family: 'Comic Sans MS', cursive; font-size: 24px; 
+                  color: #1f7da9; /* Add color to the text */
+                   text-shadow: 
+                    -0.1px -0.1px 0 black,  
+                    0.1px -0.1px 0 black,
+                    -0.1px 0.1px 0 black,
+                    0.1px 0.1px 0 black;" 
+          id="sliderValue">Drunkness Level: 0</p>
+          <input type="range" id="slider" min="0" max="10" step="0.5" value="0">
+
+<!--         <input type="text" id="notes" placeholder="(Optional Notes)" onfocus="this.placeholder=''" onblur="this.placeholder='(Optional Notes)'"> -->
+        <input type="text" id="notes" placeholder="" 
+             onfocus="this.placeholder=''" 
+             onblur="this.placeholder='(Optional Notes, Max. ' + maxWords + ' words)'" 
+             oninput="checkWordLimit(this, maxWords)"> <!-- Placeholder will update on blur -->
+
+        <script>
+        const maxWords = 50; // Set the maximum number of words here
+
+        // Update the placeholder initially
+        document.getElementById('notes').placeholder = '(Optional Notes, Max. ' + maxWords + ' words)';
+
+        function checkWordLimit(input, maxWords) {
+            const words = input.value.split(/\s+/).filter(word => word.length > 0); // Split by whitespace and filter out empty entries
+            if (words.length > maxWords) {
+                input.value = words.slice(0, maxWords).join(' '); // Limit to maxWords
+            }
+        }
+        </script>
+      
+        <button id="sendDataBtn" style="background-color: #4CAF50; color: white; font-family: 'Comic Sans MS', cursive; border: none; border-radius: 5px; padding: 10px 20px;">SUBMIT</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

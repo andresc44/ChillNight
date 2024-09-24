@@ -1,25 +1,207 @@
-/* a minimalist set of CSS resets */
-
-/* default to border-box */
-html {
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-/* adjust typography defaults */
 body {
-  margin: 1rem;
-  font-family: sans-serif;
-  line-height: 1.5;
+  background-color: #e5f0ee;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
-/* images and videos max out at full width */
-img,
-video {
-  height: auto;
-  max-width: 100%;
+.container {
+  text-align: center;
+  padding: 10px; /* Reduced padding */
+}
+
+h1 {
+  font-family: 'Brush Script MT', cursive; 
+  font-size: 56px; 
+  font-weight: 100; 
+  margin-bottom: 20px; 
+  color: #5f8c83; 
+  text-shadow: 
+    -0.25px -0.25px 0 black,  
+    0.25px -0.25px 0 black,
+    -0.25px 0.25px 0 black,
+    0.25px 0.25px 0 black; /* Thinner outline effect */
+}
+
+select {
+  padding: 8px; /* Reduced padding */
+  font-size: 16px; 
+  border: 2px solid white
+    ; 
+  border-radius: 5px; 
+  background-color: black; 
+  color: white; 
+  cursor: pointer; 
+  transition: border-color 0.3s; 
+  font-family: 'Comic Sans MS', cursive; /* More casual font for names */
+  box-shadow: 0 0 0 1px black; /* Added black outline */
+}
+
+select:hover {
+  border-color: deepskyblue; 
+}
+
+#drinkCountDisplay {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin-top: 20px; 
+  font-family: 'Comic Sans MS', cursive; /* Comic Sans for the drink count */
+/*   text-shadow: 
+    -0.5px -0.5px 0 black,  
+    0.5px -0.5px 0 black,
+    -0.5px 0.5px 0 black,
+    0.5px 0.5px 0 black; /* Thinner outline effect */ */
+}
+
+.circle {
+  width: 150px;
+  height: 150px;
+  border: 5px solid #8e5ead; /* Outer border */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #8e5ead;
+/*   box-shadow: 0 0 0 0.5px black, inset 0 0 0 0.5px black; /* Outer and inner black outlines */ */
+}
+
+
+.hidden {
+  display: none;
+}
+
+/* .buttons {
+  margin: 20px 0;
+} */
+
+/* Common styles for buttons container */
+/* Common styles for buttons container */
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Plus Button */
+.plus-button {
+  background-color: transparent; /* Make button background transparent */
+  border: none; /* Remove button border */
+  width: 50px; /* Button size */
+  height: 50px; /* Button size */
+  position: relative; /* For pseudo-elements positioning */
+  cursor: pointer;
+  margin: 0 20px;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.plus-button::before,
+.plus-button::after {
+  content: '';
+  position: absolute;
+  background-color: #8e5ead; /* Color of the plus sign */
+  border-radius: 2px; /* Slight rounding to make it smoother */
+}
+
+.plus-button::before {
+  width: 30px; /* Horizontal line length */
+  height: 5px; /* Line thickness */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centering the line */
+}
+
+.plus-button::after {
+  width: 5px; /* Vertical line thickness */
+  height: 30px; /* Line height */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centering the line */
+}
+
+/* Hover effect for plus button */
+.plus-button:hover {
+  background-color: deepskyblue; /* Hover background color */
+}
+
+/* Minus Button */
+.minus-button {
+  background-color: transparent; /* Make button background transparent */
+  border: none; /* Remove button border */
+  width: 50px; /* Button size */
+  height: 50px; /* Button size */
+  position: relative; /* For pseudo-elements positioning */
+  cursor: pointer;
+  margin: 0 20px;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.minus-button::before {
+  content: '';
+  position: absolute;
+  background-color: #8e5ead; /* Color of the minus sign */
+  border-radius: 2px; /* Slight rounding for smoother appearance */
+  width: 30px; /* Horizontal line length */
+  height: 5px; /* Line thickness */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the line */
+}
+
+/* Hover effect for minus button */
+.minus-button:hover {
+  background-color: deepskyblue; /* Hover background color */
+}
+
+
+/* Slider styles */
+input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none; /* Remove default styling */
+  background: #1f7da9; /* Track color */
+  height: 12px; /* Increased height of the track for more width */
+  border-radius: 5px; /* Rounded edges */
+  margin-top: 0px; /* Space for slider */
+  box-shadow: 0 0 0 0.5px black; /* Added black outline */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default thumb styling */
+  appearance: none; /* Remove default thumb styling */
+  width: 30px; /* Increased width of the thumb */
+  height: 30px; /* Increased height of the thumb */
+  background: #1f7da9; /* Thumb color */
+  border-radius: 50%; /* Circular shape */
+  cursor: pointer; /* Cursor change on hover */
+  box-shadow: 0 0 0 1px black; /* Added black outline */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 30px; /* Increased width of the thumb */
+  height: 30px; /* Increased height of the thumb */
+  background: #1f7da9; /* Thumb color */
+  border-radius: 50%; /* Circular shape */
+  cursor: pointer; /* Cursor change on hover */
+  box-shadow: 0 0 0 1px black; /* Added black outline */
+}
+
+input[type="text"] {
+  width: 95%;
+  padding: 8px; /* Reduced padding */
+  margin: 10px 0;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  font-family: 'Comic Sans MS', cursive; /* More casual font for names */
+  box-shadow: 0 0 0 0.5px black; /* Added black outline */
+}
+
+input[type="text"]::placeholder {
+  color: grey;
 }
