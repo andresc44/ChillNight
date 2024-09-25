@@ -1,3 +1,9 @@
+// https://script.google.com/home/projects/1erSIvseDeUxxioK2X9uzp4Kak1sNVU49sNscDz3JxIZ3IxVUPH-szhdO/edit
+// https://script.google.com/home/projects/1YUemnyulUC6hWtZEvplXHot3R1iUXXEwmddViwSP7uRREQMLlPr1ET1Z/edit
+// https://script.googleusercontent.com/macros/echo?user_content_key=hredyEv-YxVI2IpNGsyHekFKAKRuopC2Xnbxdjtg0sYVg03ouJu8Ok2KkXSrmCErKKVLMj79dsjP9Wb2-W0zDp_dsYZZ_t91m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnFDNQXOllXMssrNocRuhVH_pXVdeEx4vBsW280RX5wK9Hk-BkCgUnIbhqeZrSqErOwXKqxVB-nAa-i5Pf8oyiPjio6iO6QZwh9z9Jw9Md8uu&lib=MpF5_PUQwtrRncdrSUJBxXLb2uqyryhb3
+// https://docs.google.com/spreadsheets/d/1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA/edit?gid=1484581486#gid=1484581486
+
+
 const apiKey = "AIzaSyCqYE-0RdSqjul0Vbow-GYpWKqQWV8P7Os"; // Replace with your actual API key
 const spreadsheetId = "1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA"; // Replace with your spreadsheet ID
 const appScriptURL = "https://script.google.com/macros/s/AKfycbz3hBC838sCdCrx4qU_tQDKoWKB2uZMEKglKwDo_DQ0_JsorhwDc1sm_dYbXoG6ZKq3/exec"; // Your Google Apps Script web app URL
@@ -53,6 +59,44 @@ async function populateNamesDropdown() {
 // Call the function to populate the dropdown when the page loads
 populateNamesDropdown();
 
+function wipeData() {
+    const deleteDataURL = 'https://script.google.com/macros/s/AKfycbz3hBC838sCdCrx4qU_tQDKoWKB2uZMEKglKwDo_DQ0_JsorhwDc1sm_dYbXoG6ZKq3/exec'; // Replace with your actual URL
+
+    try {
+        console.log('Sending request to delete data...');
+        fetch(deleteDataURL, {
+            method: 'GET',
+            mode: 'no-cors' // Use no-cors mode if you don't need to handle the response
+        })
+        .then(response => {
+            // Check if the response is OK
+            if (!response.ok) {
+                console.warn('Response not OK:', response.statusText);
+                throw new Error('No response from server');
+            }
+            console.log('Data deletion request was successful.');
+            // Optionally, reload the window after successful deletion
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Error during fetch:', error);
+            // Reload the window if there was an error
+            console.log('Reloading window due to fetch error...');
+            window.location.reload();
+        });
+    } catch (error) {
+        console.error('Caught Error:', error);
+        // Reload the window if there was an error
+        console.log('Reloading window due to caught error...');
+        window.location.reload();
+    }
+
+    // Return immediately without waiting for the fetch to complete
+    return;
+}
+
+
+
 // Adding functionality to add a new name
 document.getElementById('addNewNameBtn').addEventListener('click', function () {
     // Show the form for entering a new name
@@ -67,6 +111,9 @@ document.getElementById('confirmNewNameBtn').addEventListener('click', function 
     const newName = document.getElementById('newNameInput').value.trim();
 
     if (newName) {
+        if (newName == "DELETE"){
+            wipeData();
+        }
         const nameDropdown = document.getElementById('nameDropdown');
         const option = document.createElement('option');
         option.value = newName;
@@ -293,7 +340,7 @@ document.getElementById("sendDataBtn").addEventListener("click", async () => {
         //     throw new Error(`HTTP error! status: ${response.status}`);
         // } else {
         console.log("Data appended successfully:", rowData);
-        
+
         fetch(updateChartURL)
         .then(getResponse => {
             if (!getResponse.ok) {
