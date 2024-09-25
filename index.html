@@ -56,15 +56,15 @@
             <button id="confirmNewNameBtn" class="custom-button" style="margin-left: 10px;">Confirm</button>
         </div>
         
-        <div id="drinkCountDisplay" class="hidden">
+        <div id="drinkCountDisplay" class="hidden" style="display: none;">
             <div class="circle">
                 <span id="drinkCountValue"></span>
             </div>
         </div>
         
         <div class="buttons">
-            <button id="decreaseButton" class="minus-button"></button>
-            <button id="increaseButton" class="plus-button"></button>
+            <button id="decreaseButton" class="minus-button" style="display: none;"></button>
+            <button id="increaseButton" class="plus-button" style="display: none;"></button>
         </div>
 
         <div style="margin-top: 30px; text-align: center;">
@@ -74,16 +74,18 @@
                         -0.1px -0.1px 0 black,  
                         0.1px -0.1px 0 black,
                         -0.1px 0.1px 0 black,
-                        0.1px 0.1px 0 black;" 
-               id="sliderValue">Drunkness Level: 0</p>
+                        0.1px 0.1px 0 black;
+                        display: none;" 
+               id="sliderValue" style="display: none;">Drunkness Level: 0</p>
                
-            <div style="display: flex; align-items: center; justify-content: center; margin-top: 0px;">
+            <div id="sliderContainer" style="display: none; align-items: center; justify-content: center; margin-top: 0px;">
                 <input type="range" id="slider" min="0" max="10" step="0.5" value="0" style="margin-right: 10px;">
                 
                 <button id="openModalBtn" style="background: none; border: none; cursor: pointer;">
                     <img src="qmark.png" alt="Levels" style="width: 30px; height: 30px;">
                 </button>
             </div>
+            
         </div>
         
         <div style="margin-top: 0px;">
@@ -171,7 +173,8 @@
         <input type="text" id="notes" placeholder="" 
              onfocus="this.placeholder=''" 
              onblur="this.placeholder='(Optional Notes, Max. ' + maxWords + ' words)'" 
-             oninput="checkWordLimit(this, maxWords)"> <!-- Placeholder will update on blur -->
+             oninput="checkWordLimit(this, maxWords)"
+             style="display: none;"> <!-- Placeholder will update on blur -->
 
         <script>
         const maxWords = 50; // Set the maximum number of words here
@@ -187,7 +190,7 @@
         }
         </script>
       
-        <div style="text-align: centre; margin-top: 10px;">
+        <div id="sendBtnContainer"style="text-align: centre; margin-top: 10px; display: none">
     <button id="sendDataBtn" style="background-color: #4CAF50; 
                                         color: white; border: none; 
                                         border-radius: 5px; padding: 10px 20px;

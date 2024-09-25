@@ -16,7 +16,23 @@ document
     .getElementById("nameDropdown")
     .addEventListener("change", async function () {
         const selectedName = this.value;
+        const drinkCountDisplay = document.getElementById('drinkCountDisplay');
+        const decreaseButton = document.getElementById('decreaseButton');
+        const increaseButton = document.getElementById('increaseButton');
+        const sliderValue = document.getElementById('sliderValue');
+        const sliderContainer = document.getElementById('sliderContainer');
+        const notes = document.getElementById('notes');
+        const sendBtnContainer = document.getElementById('sendBtnContainer');
+
         if (selectedName) {
+            drinkCountDisplay.style.display = 'flex';
+            decreaseButton.style.display = 'block';
+            increaseButton.style.display = 'block';
+            sliderValue.style.display = 'block';
+            sliderContainer.style.display = 'flex';
+            notes.style.display = 'block';
+            sendBtnContainer.style.display = 'block';
+
             const {drunknessLevel, drinkCount} = await fetchDrunknessAndDrinkCount(selectedName);
             currentDrunknessLevel = drunknessLevel || 0;  
             currentDrinkCount = drinkCount || 0; // Store the initial drink count locally
@@ -25,7 +41,17 @@ document
             updateBackgroundColor();
             resetSlider(); // Reset slider to 0
         }
+        else{
+            drinkCountDisplay.style.display = 'none';
+            decreaseButton.style.display = 'none';
+            increaseButton.style.display = 'none';
+            sliderValue.style.display = 'none';
+            sliderContainer.style.display = 'none';
+            notes.style.display = 'none';
+            sendBtnContainer.style.display = 'none';
+        }
     });
+
 async function populateNamesDropdown() {
     const response = await fetch(
         `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/'DrinksDataAppScript'!A2:A?key=${apiKey}`
@@ -111,6 +137,14 @@ document.getElementById('confirmNewNameBtn').addEventListener('click', function 
     const newName = document.getElementById('newNameInput').value.trim();
 
     if (newName) {
+        const drinkCountDisplay = document.getElementById('drinkCountDisplay');
+        const decreaseButton = document.getElementById('decreaseButton');
+        const increaseButton = document.getElementById('increaseButton');
+        const sliderValue = document.getElementById('sliderValue');
+        const sliderContainer = document.getElementById('sliderContainer');
+        const notes = document.getElementById('notes');
+        const sendBtnContainer = document.getElementById('sendBtnContainer');
+
         if (newName == "DELETE"){
             wipeData();
         }
@@ -127,8 +161,23 @@ document.getElementById('confirmNewNameBtn').addEventListener('click', function 
         document.getElementById('newNameForm').style.display = 'none';
         document.getElementById('newNameInput').value = '';
         displayDrinkCount(currentDrinkCount)
+
+        drinkCountDisplay.style.display = 'flex';
+        decreaseButton.style.display = 'block';
+        increaseButton.style.display = 'block';
+        sliderValue.style.display = 'block';
+        sliderContainer.style.display = 'flex';
+        notes.style.display = 'block';
+        sendBtnContainer.style.display = 'block';
     } else {
         alert('Please enter a name');
+        drinkCountDisplay.style.display = 'none';
+        decreaseButton.style.display = 'none';
+        increaseButton.style.display = 'none';
+        sliderValue.style.display = 'none';
+        sliderContainer.style.display = 'none';
+        notes.style.display = 'none';
+        sendBtnContainer.style.display = 'none';
     }
 });
 
