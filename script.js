@@ -183,6 +183,47 @@ function updateBackgroundColor() {
     body.style.backgroundColor = backgroundColor;
 }
 
+async function populateLatestFeed() {
+    const response = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/'RawDataAppScript'!A1:E?key=${apiKey}`
+    );
+
+    if (!response.ok) {
+        console.error("Failed to fetch latest feed data:", response.statusText);
+        return;
+    }
+
+    const data = await response.json();
+    const values = data.values;
+
+    // Predefined content element (make sure you have an element with this ID in your HTML)
+    const latestFeedContent = document.getElementById("latestFeedContent");
+    latestFeedContent.innerHTML = "-- CHAT --"; // Clear any existing content
+
+    // Iterate through the values in the column, starting from the second row
+    if (values && values.length > 1) { // Check if there are at least two rows of data
+        for (let i = 1; i < values.length; i++) { // Start from the second row (index 1)
+            const feedPerson = values[i][1]; // Assuming person is in column B (index 1)
+            const feedItem = values[i][4]; // Assuming feed item is in column E (index 4)
+            const dateTime = values[i][0]; // Assuming date time is in column A (index 0)
+    
+            if (feedItem) {
+                // Convert dateTime string to Date object
+                const time = new Date(dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+                const p = document.createElement("p");
+                p.textContent = `${time} - ${feedPerson}: ${feedItem}`; // Create a paragraph with time, person, and item
+                latestFeedContent.appendChild(p); // Append to the predefined content
+            }
+        }
+    } else {
+        // Handle case when there are no values or only the header row
+        latestFeedContent.innerHTML = "<p>No updates available.</p>";
+    }
+}
+
+populateLatestFeed();
+
 function resetSlider() {
     const slider = document.getElementById("slider");
     slider.value = currentDrunknessLevel; // Set slider to the drunkness level

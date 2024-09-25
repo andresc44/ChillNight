@@ -67,7 +67,7 @@
             <button id="increaseButton" class="plus-button"></button>
         </div>
 
-        <div style="display: flex; align-items: center; margin-top: 60px;">
+        <div style="margin-top: 60px; text-align: center;">
             <p style="font-size: 24px; 
                       color: #1f7da9; 
                       text-shadow: 
@@ -76,34 +76,53 @@
                         -0.1px 0.1px 0 black,
                         0.1px 0.1px 0 black;" 
                id="sliderValue">Drunkness Level: 0</p>
-            <input type="range" id="slider" min="0" max="10" step="0.5" value="0" style="margin-left: 10px;">
-            <button id="openModalBtn" style="background: none; border: none; cursor: pointer; margin-left: 10px;">
-                <img src="qmark.png" alt="Click Me" style="width: 20px; height: 20px;">
-            </button>
+               
+            <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+                <input type="range" id="slider" min="0" max="10" step="0.5" value="0" style="margin-right: 10px;">
+                
+                <button id="openModalBtn" style="background: none; border: none; cursor: pointer;">
+                    <img src="qmark.png" alt="Levels" style="width: 30px; height: 30px;">
+                </button>
+            </div>
         </div>
-        <div style="margin-top: 20px;">
-            <button id="latestFeedBtn" style="background-color: #4CAF50; 
+        
+        <div style="margin-top: 0px;">
+            <button id="latestFeedBtn" style="background-color: #5a5a5a; 
                                                 color: white; border: none; 
                                                 border-radius: 5px; padding: 10px 20px;
                                                 font-size: 20px;
-                                                font-family: 'Comic Neue';">
+                                                font-family: 'Comic Neue';
+                                                font-weight: 700">
                 Latest Feed
             </button>
         </div>
         
         <!-- Modal Structure -->
         <div id="myModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.9);">
-            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 20px; width: 80%; max-width: 500px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                <span id="closeModalBtn" style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 20px;">&times;</span>
-                <p>Your predefined text goes \n here. This is where you can provide any \n information you want \n for different levels.</p>
+            <div style="position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%); padding: 20px; width: 80%; max-width: 500px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <span id="closeModalBtn" style="position: absolute; top: 0px; right: 0px; cursor: pointer; font-size: 100px; color: rgb(255, 255, 255); background-color: red; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 10px; align-items: flex-start; line-height: 45px">&times;</span>
+                <p style="color: black; font-size: 18px; font-family: 'Comic Neue'; font-weight: 700; text-align: left;">
+                 -- GUIDELINES FOR DRUNKNESS LEVELS -- <br><br>
+                 0 - Sober <br><br>
+                 1 - Slight buzz <br><br>
+                 2 - Driving Limit <br><br>
+                 3 - Decently Tipsy <br><br>
+                 4 - Silly but still in control <br><br>
+                 5 - Almost drunk. Point to be at before clubbing <br><br>
+                 6 - Drunk. Having fun; irresponsible but non-liability <br><br>
+                 7 - Very drunk. Wild and with a little luck may find their way home <br><br>
+                 8 - Liability. Too much to drink, night is ruined, but will be alright <br><br>
+                 9 - In danger. Likely never been worse, may need hospital for IV <br><br>
+                 10 - Hospital Immediately! Seek medical help immediately</p>
             </div>
         </div>
 
-        <!-- Modal Structure for the Latest Feed -->
         <div id="latestFeedModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.9);">
-            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 20px; width: 80%; max-width: 500px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                <span id="closeLatestFeedModalBtn" style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 20px;">&times;</span>
-                <p>Your predefined text for \n the latest feed goes here.</p>
+            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 20px; width: 80%; max-width: 500px; max-height: 90%; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); overflow: hidden;">
+                <span id="closeLatestFeedModalBtn" style="position: absolute; top: 0px; right: 0px; cursor: pointer; font-size: 100px; color: rgb(255, 255, 255); background-color: red; width: 60px; height: 60px; display: flex; align-items: top; justify-content: center; border-radius: 10px; line-height: 45px;">&times;</span>
+                
+                <!-- Scrollable content area -->
+                <div id="latestFeedContent" style="color: black; font-size: 18px; font-family: 'Comic Neue'; font-weight: 700; text-align: left; max-height: 500px; overflow-y: auto; padding-right: 10px;"></div>
             </div>
         </div>
         
