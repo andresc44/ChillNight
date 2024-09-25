@@ -4,19 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drink Count App</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Link to Google Fonts for Comic Neue, including bold -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Set Comic Neue as the font for the body and make all text bold */
+        body {
+            font-family: 'Comic Neue';
+            font-weight: 700; /* Set bold font for the entire body */
+        }
+
+        /* Set bold font for specific elements if needed */
+        h1 {
+            font-weight: 700; /* Bold for the h1 */
+        }
+
+        /* Ensure all buttons and input fields are bold */
+        .custom-button, #sendDataBtn, #newNameInput, #notes, #sliderValue {
+            font-weight: 700; /* Bold for buttons and input fields */
+        }
+        #nameDropdown {
+            font-family: 'Comic Neue', sans-serif; /* Use Comic Neue font */
+            font-weight: 700; /* Set bold font */
+            padding: 5px; /* Add some padding for better appearance */
+            border-radius: 5px; /* Rounded corners */
+            border: 1px solid #ccc; /* Border color */
+        }
+      
+        /* Additional styling if needed */
+        input[type="text"], input[type="range"] {
+            font-weight: 700; /* Ensure input fields also have bold text */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Chill Night</h1>
-        <select id="nameDropdown">
-            <option value="">-- Select Name --</option>
-            <option value="Andres">Andres</option>
-            <option value="Mauricio">Mauricio</option>
-            <option value="Nosh">Nosh</option>
-            <option value="Diego">Diego</option>
-            <option value="Miguel">Miguel</option>
-        </select>
+        <div id="nameDropdownContainer">
+          <select id="nameDropdown">
+              <option value="">-- Select Name --</option>
+              <!-- Options will be added here dynamically by JavaScript -->
+          </select>
+
+          <button id="addNewNameBtn" class="custom-button">Add New Name</button>
+        </div>
+
+
+        <!-- Hidden form for adding a new name -->
+        <div id="newNameForm" style="display: none; margin-top: 1px;">
+            <input type="text" id="newNameInput" placeholder="Enter New Name">
+            <button id="confirmNewNameBtn" class="custom-button" style="margin-left: 10px;">Confirm</button>
+        </div>
         
         <div id="drinkCountDisplay" class="hidden">
             <div class="circle">
@@ -29,8 +67,7 @@
             <button id="increaseButton" class="plus-button"></button>
         </div>
 
-
-        <p style="margin-top: 60px; font-family: 'Comic Sans MS', cursive; font-size: 24px; 
+        <p style="margin-top: 60px; font-size: 24px; 
                   color: #1f7da9; /* Add color to the text */
                    text-shadow: 
                     -0.1px -0.1px 0 black,  
@@ -40,7 +77,6 @@
           id="sliderValue">Drunkness Level: 0</p>
           <input type="range" id="slider" min="0" max="10" step="0.5" value="0">
 
-<!--         <input type="text" id="notes" placeholder="(Optional Notes)" onfocus="this.placeholder=''" onblur="this.placeholder='(Optional Notes)'"> -->
         <input type="text" id="notes" placeholder="" 
              onfocus="this.placeholder=''" 
              onblur="this.placeholder='(Optional Notes, Max. ' + maxWords + ' words)'" 
@@ -60,8 +96,25 @@
         }
         </script>
       
-        <button id="sendDataBtn" style="background-color: #4CAF50; color: white; font-family: 'Comic Sans MS', cursive; border: none; border-radius: 5px; padding: 10px 20px;">SUBMIT</button>
+        <div style="text-align: centre; margin-top: 10px;">
+    <button id="sendDataBtn" style="background-color: #4CAF50; 
+                                        color: white; border: none; 
+                                        border-radius: 5px; padding: 10px 20px;
+                                        font-size: 20px;
+                                        font-family: 'Comic Neue'; /* More casual font for names */
+                                        font-weight: 700;">SUBMIT
+    </button>
+        </div>
+
+        <!-- New button aligned below and to the right -->
+        <div style="text-align: right; margin-top: 10px;">
+            <a href="https://docs.google.com/spreadsheets/d/1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA/pubhtml?gid=1484581486&single=true" target="_blank">
+              <img src="/chart.jpg" alt="Chart Image" style="width: 40px; height: 40px; cursor: pointer; margin-left: 10px;">
+            </a>
+        </div>
+      
     </div>
+  
 
     <script src="script.js"></script>
 </body>

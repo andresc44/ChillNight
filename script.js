@@ -20,6 +20,70 @@ document
             resetSlider(); // Reset slider to 0
         }
     });
+async function populateNamesDropdown() {
+    const response = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/'DrinksDataAppScript'!A2:A?key=${apiKey}`
+    );
+
+    if (!response.ok) {
+        console.error("Failed to fetch names:", response.statusText);
+        return;
+    }
+
+    const data = await response.json();
+    const values = data.values;
+
+    const nameDropdown = document.getElementById("nameDropdown");
+
+    // Clear any existing options (except the default)
+    nameDropdown.innerHTML = '<option value="">-- Select Name --</option>';
+
+    // Iterate through the names in column A and create an option for each
+    values.forEach(row => {
+        const name = row[0]; // The name is in column A
+        if (name) {
+            const option = document.createElement("option");
+            option.value = name;
+            option.textContent = name;
+            nameDropdown.appendChild(option);
+        }
+    });
+}
+
+// Call the function to populate the dropdown when the page loads
+populateNamesDropdown();
+
+// Adding functionality to add a new name
+document.getElementById('addNewNameBtn').addEventListener('click', function () {
+    // Show the form for entering a new name
+  
+    const newNameForm = document.getElementById('newNameForm');
+  
+    newNameForm.style.display = newNameForm.style.display === 'none' ? 'flex' : 'none';
+});
+
+// Confirm button to add new name to dropdown
+document.getElementById('confirmNewNameBtn').addEventListener('click', function () {
+    const newName = document.getElementById('newNameInput').value.trim();
+
+    if (newName) {
+        const nameDropdown = document.getElementById('nameDropdown');
+        const option = document.createElement('option');
+        option.value = newName;
+        option.textContent = newName;
+        nameDropdown.appendChild(option);
+        
+        // Optional: Auto-select the new name
+        nameDropdown.value = newName;
+
+        // Hide the form and clear the input field
+        document.getElementById('newNameForm').style.display = 'none';
+        document.getElementById('newNameInput').value = '';
+        displayDrinkCount(currentDrinkCount)
+    } else {
+        alert('Please enter a name');
+    }
+});
 
 async function fetchDrunknessAndDrinkCount(name) {
     const response = await fetch(
@@ -186,7 +250,7 @@ document.getElementById("submitButton").addEventListener("click", async () => {
         console.log("Data appended successfully:", rowData);
         // Clear the screen and display the thank you message
         document.body.innerHTML =
-            '<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 24px; color: white; background-color: black; font-family: "Comic Sans MS";">Thanks! Reload page to do another entry</div>';
+            '<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 24px; color: white; background-color: black; font-family: "Comic Neue"; font-weight: 700; ">Thanks! Reload page to do another entry</div>';
     }
 
         const result = await response.json();

@@ -1,11 +1,10 @@
 body {
   background-color: #e5f0ee;
   color: white;
-  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
   margin: 0;
 }
 
@@ -27,30 +26,76 @@ h1 {
     0.25px 0.25px 0 black; /* Thinner outline effect */
 }
 
+
 select {
-  padding: 8px; /* Reduced padding */
-  font-size: 16px; 
-  border: 2px solid white
-    ; 
-  border-radius: 5px; 
-  background-color: black; 
-  color: white; 
-  cursor: pointer; 
-  transition: border-color 0.3s; 
-  font-family: 'Comic Sans MS', cursive; /* More casual font for names */
-  box-shadow: 0 0 0 1px black; /* Added black outline */
+    padding: 8px; /* Reduced padding */
+    font-size: 16px; 
+    border: 5px solid white; 
+    border-radius: 5px; 
+    background-color: black; 
+    color: white; 
+    cursor: pointer; 
+    transition: border-color 0.3s; 
+    font-family: 'Comic Neue'; /* More casual font for names */
+    box-shadow: 0 0 0 0px black; /* Added black outline */
+    height: 45px; /* Set height for dropdown */
+    box-sizing: border-box; /* Ensure padding doesn't affect height */
 }
 
 select:hover {
-  border-color: deepskyblue; 
+    border-color: deepskyblue; 
 }
+
+.custom-button {
+    background-color: lightblue;
+    color: black;
+    font-size: 16px;
+    font-family: 'Comic Neue'; /* More casual font for names */
+    padding: 10px 20px;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    height: 45px; /* Set height for button to match dropdown */
+    box-sizing: border-box; /* Ensure padding doesn't affect height */
+}
+
+.custom-button:hover {
+    background-color: darkblue;
+    color: white;
+    transform: scale(1.05);
+}
+
+
+#newNameForm {
+  display: flex;
+  align-items: center; /* Ensure both input and button are vertically aligned */
+  font-size: 1.0rem; /* Slightly increased font size */
+}
+
+#newNameForm input,
+#newNameForm button {
+  height: 45px; /* Ensure they are the same height */
+  padding: 10px;
+  box-sizing: border-box; /* Padding won't affect size */
+  font-size: 1.0rem; /* Slightly increased font size */
+}
+
+#newNameForm input {
+  flex: 1;
+}
+
+#newNameForm button {
+  vertical-align: middle; /* Align button vertically with input */
+}
+
 
 #drinkCountDisplay {
   display: flex; 
   justify-content: center; 
   align-items: center; 
   margin-top: 20px; 
-  font-family: 'Comic Sans MS', cursive; /* Comic Sans for the drink count */
+  font-family: 'Comic Neue'; /* Comic Sans for the drink count */
 /*   text-shadow: 
     -0.5px -0.5px 0 black,  
     0.5px -0.5px 0 black,
@@ -90,73 +135,89 @@ select:hover {
 
 /* Plus Button */
 .plus-button {
-  background-color: transparent; /* Make button background transparent */
-  border: none; /* Remove button border */
-  width: 50px; /* Button size */
-  height: 50px; /* Button size */
-  position: relative; /* For pseudo-elements positioning */
+  background-color: transparent; 
+  border: none;
+  width: 50px;
+  height: 50px;
+  position: relative;
   cursor: pointer;
   margin: 0 20px;
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  transition: background-color 0.3s ease, transform 0.2s; /* Added smooth scale transition */
 }
 
 .plus-button::before,
 .plus-button::after {
   content: '';
   position: absolute;
-  background-color: #8e5ead; /* Color of the plus sign */
-  border-radius: 2px; /* Slight rounding to make it smoother */
+  background-color: #8e5ead; 
+  border-radius: 2px; 
 }
 
 .plus-button::before {
-  width: 30px; /* Horizontal line length */
-  height: 5px; /* Line thickness */
+  width: 30px;
+  height: 5px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centering the line */
+  transform: translate(-50%, -50%);
 }
 
 .plus-button::after {
-  width: 5px; /* Vertical line thickness */
-  height: 30px; /* Line height */
+  width: 5px;
+  height: 30px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centering the line */
+  transform: translate(-50%, -50%);
 }
 
-/* Hover effect for plus button */
-.plus-button:hover {
-  background-color: deepskyblue; /* Hover background color */
+/* Hover and Active Effects for Plus Button */
+.plus-button:hover,
+.plus-button:active {
+  transform: scale(1.5); /* Slight scaling effect on hover/active */
+  outline: none; /* Remove default outline */
 }
+
+/* Remove focus outline after releasing the button */
+.plus-button:focus {
+  outline: none; /* Ensure no lingering focus after button is released */
+}
+
 
 /* Minus Button */
 .minus-button {
-  background-color: transparent; /* Make button background transparent */
-  border: none; /* Remove button border */
-  width: 50px; /* Button size */
-  height: 50px; /* Button size */
-  position: relative; /* For pseudo-elements positioning */
+  background-color: transparent;
+  border: none;
+  width: 50px;
+  height: 50px;
+  position: relative;
   cursor: pointer;
   margin: 0 20px;
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  transition: background-color 0.3s ease, transform 0.2s; /* Added smooth scale transition */
 }
 
 .minus-button::before {
   content: '';
   position: absolute;
-  background-color: #8e5ead; /* Color of the minus sign */
-  border-radius: 2px; /* Slight rounding for smoother appearance */
-  width: 30px; /* Horizontal line length */
-  height: 5px; /* Line thickness */
+  background-color: #8e5ead;
+  border-radius: 2px;
+  width: 30px;
+  height: 5px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Center the line */
+  transform: translate(-50%, -50%);
 }
 
-/* Hover effect for minus button */
-.minus-button:hover {
-  background-color: deepskyblue; /* Hover background color */
+/* Hover and Active Effects for Minus Button */
+.minus-button:hover,
+.minus-button:active {
+  transform: scale(1.5); /* Slight scaling effect on hover/active */
+  outline: none; /* Remove default outline */
 }
+
+/* Remove focus outline after releasing the button */
+.minus-button:focus {
+  outline: none; /* Ensure no lingering focus after button is released */
+}
+
 
 
 /* Slider styles */
@@ -168,8 +229,10 @@ input[type="range"] {
   border-radius: 5px; /* Rounded edges */
   margin-top: 0px; /* Space for slider */
   box-shadow: 0 0 0 0.5px black; /* Added black outline */
+  transition: background 0.3s ease; /* Smooth transition for background change */
 }
 
+/* Slider thumb */
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; /* Remove default thumb styling */
   appearance: none; /* Remove default thumb styling */
@@ -179,8 +242,10 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%; /* Circular shape */
   cursor: pointer; /* Cursor change on hover */
   box-shadow: 0 0 0 1px black; /* Added black outline */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for color */
 }
 
+/* Firefox thumb */
 input[type="range"]::-moz-range-thumb {
   width: 30px; /* Increased width of the thumb */
   height: 30px; /* Increased height of the thumb */
@@ -188,7 +253,11 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%; /* Circular shape */
   cursor: pointer; /* Cursor change on hover */
   box-shadow: 0 0 0 1px black; /* Added black outline */
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
+
+
 
 input[type="text"] {
   width: 95%;
@@ -198,7 +267,9 @@ input[type="text"] {
   border-radius: 5px;
   background-color: black;
   color: white;
-  font-family: 'Comic Sans MS', cursive; /* More casual font for names */
+  font-size: 20px;
+  font-family: 'Comic Neue'; /* More casual font for names */
+  font weight: 700
   box-shadow: 0 0 0 0.5px black; /* Added black outline */
 }
 
