@@ -1,7 +1,7 @@
 const apiKey = "AIzaSyCqYE-0RdSqjul0Vbow-GYpWKqQWV8P7Os"; // Replace with your actual API key
 const spreadsheetId = "1kRCJhcXT5vEIGGkxMxfMNhQMRldbA1m4r5IuyxcKNCA"; // Replace with your spreadsheet ID
 const appScriptURL = "https://script.google.com/macros/s/AKfycbz3hBC838sCdCrx4qU_tQDKoWKB2uZMEKglKwDo_DQ0_JsorhwDc1sm_dYbXoG6ZKq3/exec"; // Your Google Apps Script web app URL
-
+const updateChartURL = "https://script.google.com/macros/s/AKfycbxR-W9S_Mo9g-z9PjlvUdkwepqdtfi5LGmeXGZL_Ssk616Nr5Hu2Krfvx8Uzd4D533aCw/exec"
 
 let currentDrunknessLevel = 0; // Initialize a local variable to store the drunkness level
 let currentDrinkCount = 0; // Initialize a local variable to store the drink count
@@ -256,24 +256,28 @@ slider.addEventListener("input", function () {
 });
 
 // Submit button functionality
-document.getElementById("submitButton").addEventListener("click", async () => {
+document.getElementById("sendDataBtn").addEventListener("click", async () => {
+    
     const selectedName = document.getElementById("nameDropdown").value;
     const drunknessLevel = currentDrunknessLevel;
     const drinkCount = currentDrinkCount; // Get the drink count from the display
     const notes = document.getElementById("notes").value;
-
-    if (!selectedName || drunknessLevel === null) {
+    if (!selectedName || drunknessLevel === null || drinkCount === null) {
         console.error("Name or drunkness level is missing");
         return;
     }
+    document.body.innerHTML =
+        '<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 40px; color: white; background-color: black; font-family: \'Comic Neue\'; font-weight: 700;">Thanks! \nReload page to do another entry</div>';
+    document.body.style.backgroundColor = "black"; // Set body background to black
 
     const rowData = {
-        selectedName,
-        drunknessLevel,
-        drinkCount,
-        notes,
+        name: selectedName,
+        drunknessLevel: drunknessLevel,
+        drinkCount: drinkCount,
+        notes: notes,
     }; // Include drink count in the row data
     const jsonData = JSON.stringify(rowData); // Convert data to JSON string
+    console.log(jsonData); // Use for debugging, or send it to your API here.
     
     try {
         const response = await fetch(appScriptURL, {
@@ -285,18 +289,32 @@ document.getElementById("submitButton").addEventListener("click", async () => {
             body: jsonData // Use the stringified data as the body
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        } else {
+        // if (!response.ok) {
+        //     throw new Error(`HTTP error! status: ${response.status}`);
+        // } else {
         console.log("Data appended successfully:", rowData);
+        
+        fetch(updateChartURL)
+        .then(getResponse => {
+            if (!getResponse.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return getResponse.json(); // Assuming the response is in JSON format
+        })
+        .then(data => {
+            console.log('GET request successful:', data);
+            // Handle the response data if needed
+        })
+        .catch(error => {
+            console.error('There was a problem with the GET request:', error);
+        });
         // Clear the screen and display the thank you message
-        document.body.innerHTML =
-            '<div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 24px; color: white; background-color: black; font-family: "Comic Neue"; font-weight: 700; ">Thanks! Reload page to do another entry</div>';
-    }
+        
+    // }
 
-        const result = await response.json();
-        console.log("Data sent successfully:", result);
+        // const result = await response.json();
+        // console.log("Data sent successfully:", result);
     } catch (error) {
-        console.error("Error sending data:", error);
+        console.error("No response because sending on mode no-cors. Normal Behaviour: ", error);
     }
 });
