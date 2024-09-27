@@ -11,6 +11,8 @@ const updateChartURL = "https://script.google.com/macros/s/AKfycbxR-W9S_Mo9g-z9P
 
 let currentDrunknessLevel = 0; // Initialize a local variable to store the drunkness level
 let currentDrinkCount = 0; // Initialize a local variable to store the drink count
+let ipAddressv4 = "IPv4 address placeholder"
+let ipAddressv6 = "IPv6 address placeholder"
 
 document
     .getElementById("nameDropdown")
@@ -84,6 +86,33 @@ async function populateNamesDropdown() {
 
 // Call the function to populate the dropdown when the page loads
 populateNamesDropdown();
+
+function updateUserIPv4() {
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+        ipAddressv4 = data.ip; // Update the global variable
+        // console.log("User's IPv4 Address is:", ipAddressv4); // Optional: Log the IP address
+        })
+        .catch(error => {
+        console.error('Error');
+        });
+}
+
+function updateUserIPv6() {
+    fetch('https://api64.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+        ipAddressv6 = data.ip; // Update the global variable
+        // console.log("User's IPv6 Address is:", ipAddressv6); // Optional: Log the IP address
+        })
+        .catch(error => {
+        console.error('Error');
+        });
+}
+updateUserIPv4();
+
+updateUserIPv6();
 
 function wipeData() {
     const deleteDataURL = 'https://script.google.com/macros/s/AKfycbz3hBC838sCdCrx4qU_tQDKoWKB2uZMEKglKwDo_DQ0_JsorhwDc1sm_dYbXoG6ZKq3/exec'; // Replace with your actual URL
@@ -358,6 +387,8 @@ document.getElementById("sendDataBtn").addEventListener("click", async () => {
     const drunknessLevel = currentDrunknessLevel;
     const drinkCount = currentDrinkCount; // Get the drink count from the display
     const notes = document.getElementById("notes").value;
+    const ipv4 = ipAddressv4;
+    const ipv6 = ipAddressv6;
     if (!selectedName || drunknessLevel === null || drinkCount === null) {
         console.error("Name or drunkness level is missing");
         return;
@@ -371,6 +402,8 @@ document.getElementById("sendDataBtn").addEventListener("click", async () => {
         drunknessLevel: drunknessLevel,
         drinkCount: drinkCount,
         notes: notes,
+        ipv4: ipv4,
+        ipv6: ipv6,
     }; // Include drink count in the row data
     const jsonData = JSON.stringify(rowData); // Convert data to JSON string
     console.log(jsonData); // Use for debugging, or send it to your API here.
